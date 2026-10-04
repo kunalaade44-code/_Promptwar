@@ -7,8 +7,8 @@ class Settings(BaseSettings):
     VERSION: str = "1.0.0"
     API_PREFIX: str = "/api"
     
-    # Database (Neon PostgreSQL in production, SQLite fallback in local development)
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./the_blind_spot.db")
+    # Database (Default: Embedded Local SQLite database)
+    DATABASE_URL: Optional[str] = os.getenv("DATABASE_URL")
     
     # JWT Authentication
     JWT_SECRET: str = os.getenv("JWT_SECRET", "super-secret-jwt-key-for-gurudev-hackathon-2026")
@@ -21,6 +21,11 @@ class Settings(BaseSettings):
 
     def get_normalized_database_url(self) -> str:
         url = self.DATABASE_URL
+        if not url:
+            if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"):
+                return "sqlite:////tmp/the_blind_spot.db"
+            return "sqlite:///./the_blind_spot.db"
+
         # Neon / Heroku / Supabase connection strings often start with postgres://
         if url.startswith("postgres://"):
             url = url.replace("postgres://", "postgresql://", 1)
@@ -31,3 +36,4 @@ class Settings(BaseSettings):
         extra = "allow"
 
 settings = Settings()
+

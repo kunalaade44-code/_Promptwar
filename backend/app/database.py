@@ -5,19 +5,23 @@ from .config import settings
 db_url = settings.get_normalized_database_url()
 
 connect_args = {}
+engine_kwargs = {}
+
 if "sqlite" in db_url:
     connect_args["check_same_thread"] = False
 else:
-    # Ensure SSL for remote PostgreSQL / Neon if not already specified in connection string
+    # Ensure SSL for remote PostgreSQL if not already specified in connection string
     if "sslmode" not in db_url and "localhost" not in db_url and "127.0.0.1" not in db_url:
         connect_args["sslmode"] = "require"
+    engine_kwargs["pool_pre_ping"] = True
+    engine_kwargs["pool_recycle"] = 300
 
 engine = create_engine(
     db_url,
     connect_args=connect_args,
-    pool_pre_ping=True,  # Crucial for Neon & serverless reconnects
-    pool_recycle=300,
+    **engine_kwargs
 )
+
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
