@@ -12,7 +12,8 @@ class ReflectionMessage(Base):
     user_id = Column(String(36), ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     role = Column(String(20), nullable=False)  # "user" or "assistant"
     message = Column(Text, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
 
     # Relationships
     analysis = relationship("DecisionAnalysis", back_populates="reflections")

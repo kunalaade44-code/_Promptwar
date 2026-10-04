@@ -1,9 +1,21 @@
+"""
+GuruDev (The Blind Spot) Cognitive Audit Service
+Integrates with Google Gemini AI with intelligent in-memory hash caching,
+Socratic reasoning, and high-performance dialectic evaluation.
+"""
+
+import hashlib
 import json
 import logging
-from typing import Dict, Any, Optional
+import time
+from typing import Dict, Any, Optional, List
 from ..config import settings
 
 logger = logging.getLogger(__name__)
+
+# High-Performance In-Memory Cache with TTL (Time-To-Live)
+_CACHE_STORE: Dict[str, Dict[str, Any]] = {}
+CACHE_TTL_SECONDS = 3600  # 1 hour cache duration
 
 SYSTEM_PROMPT = """You are GuruDev (The Blind Spot), an advanced AI thinking companion and cognitive audit engine.
 Your purpose is to help the user uncover potential blind spots, question unspoken assumptions, and explore lateral perspectives regarding a difficult decision.
@@ -14,6 +26,31 @@ IMPORTANT CONSTRAINTS:
 3. Help the user recognize factors they may have overlooked (e.g. academic load vs industry burnout, mentorship quality vs menial tasks, long-term opportunity cost vs immediate financial reward).
 4. Return ONLY a valid JSON object matching the requested schema. No markdown formatting, no code fencing, pure JSON.
 """
+
+def _generate_cache_key(prefix: str, **kwargs) -> str:
+    """Generate deterministic SHA-256 hash key for caching AI outputs"""
+    serialized = json.dumps(kwargs, sort_keys=True, default=str)
+    hashed = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+    return f"{prefix}:{hashed}"
+
+def _get_from_cache(cache_key: str) -> Optional[Any]:
+    """Retrieve cached result if valid and not expired"""
+    entry = _CACHE_STORE.get(cache_key)
+    if entry:
+        if time.time() - entry["timestamp"] < CACHE_TTL_SECONDS:
+            logger.debug(f"Cache HIT for key: {cache_key[:16]}...")
+            return entry["data"]
+        else:
+            del _CACHE_STORE[cache_key]
+    return None
+
+def _save_to_cache(cache_key: str, data: Any) -> None:
+    """Store result in memory cache with timestamp"""
+    # Evict oldest entry if cache exceeds 1000 items
+    if len(_CACHE_STORE) > 1000:
+        oldest_key = next(iter(_CACHE_STORE))
+        del _CACHE_STORE[oldest_key]
+    _CACHE_STORE[cache_key] = {"timestamp": time.time(), "data": data}
 
 def get_gemini_client():
     """Initialize official google-genai client if API key is present"""
@@ -29,12 +66,29 @@ def get_gemini_client():
 def analyze_decision(
     headline: str,
     background: Optional[str] = "",
-    options: Optional[list] = None,
+    options: Optional[List[str]] = None,
     rationale: Optional[str] = "",
-    criteria: Optional[list] = None,
+    criteria: Optional[List[str]] = None,
     concerns: Optional[str] = ""
 ) -> Dict[str, Any]:
-    """Execute decision blind spot analysis using Google Gemini"""
+    """
+    Execute decision blind spot analysis using Google Gemini with caching and fallback.
+    Returns structured JSON with blind spots, hidden assumptions, and lateral alternatives.
+    """
+    cache_key = _generate_cache_key(
+        "analysis",
+        headline=headline.strip().lower(),
+        background=(background or "").strip().lower(),
+        options=sorted(options or []),
+        rationale=(rationale or "").strip().lower(),
+        criteria=sorted(criteria or []),
+        concerns=(concerns or "").strip().lower()
+    )
+
+    cached_result = _get_from_cache(cache_key)
+    if cached_result:
+        return cached_result
+
     client = get_gemini_client()
     
     prompt = f"""Conduct a thorough cognitive blind-spot audit on this decision:
@@ -149,13 +203,14 @@ Return a single JSON object with this exact structure:
             if raw_text.endswith("```"):
                 raw_text = raw_text[:-3]
             parsed = json.loads(raw_text.strip())
+            _save_to_cache(cache_key, parsed)
             return parsed
         except Exception as e:
             logger.error(f"Gemini API execution error: {e}")
             # Fall through to default structured dialectic audit
 
-    # Fallback Dialectic Model (ensures local hackathon testing functions gracefully even before API key is input)
-    return {
+    # Fallback Dialectic Model (ensures local testing functions gracefully even before API key is input)
+    result = {
         "summary": f"Audit of decision: '{headline}'. Analyzing trade-offs between immediate motivations and systemic long-term factors.",
         "current_lean": rationale or "Leaning toward the option with highest immediate certainty, while weighing implicit workload frictions.",
         "balance_score": 52,
@@ -241,12 +296,25 @@ Return a single JSON object with this exact structure:
             }
         ]
     }
+    _save_to_cache(cache_key, result)
+    return result
 
 def generate_socratic_reply(question_context: str, user_answer: str) -> str:
-    """Generate a brief Socratic follow-up without deciding for the user"""
+    """Generate a brief Socratic follow-up with response caching"""
+    cache_key = _generate_cache_key(
+        "socratic",
+        context=question_context.strip().lower(),
+        answer=user_answer.strip().lower()
+    )
+    cached = _get_from_cache(cache_key)
+    if cached:
+        return cached
+
     client = get_gemini_client()
     if not client:
-        return "That reveals a significant premise in your reasoning. How would you test this premise before making a permanent commitment?"
+        fallback = "That reveals a significant premise in your reasoning. How would you test this premise before making a permanent commitment?"
+        _save_to_cache(cache_key, fallback)
+        return fallback
     
     prompt = f"""The user is reflecting on a critical thinking prompt regarding their decision.
 Socratic prompt: {question_context}
@@ -260,7 +328,11 @@ DO NOT tell them what to decide. Encourage them to verify assumptions."""
             model=settings.GEMINI_MODEL,
             contents=prompt,
         )
-        return response.text.strip()
+        reply = response.text.strip()
+        _save_to_cache(cache_key, reply)
+        return reply
     except Exception as e:
         logger.error(f"Gemini Socratic reply error: {e}")
-        return "That provides valuable clarity. What piece of missing evidence would challenge that assumption?"
+        fallback = "That provides valuable clarity. What piece of missing evidence would challenge that assumption?"
+        _save_to_cache(cache_key, fallback)
+        return fallback

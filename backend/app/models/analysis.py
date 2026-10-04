@@ -18,8 +18,9 @@ class DecisionAnalysis(Base):
     concerns = Column(Text, nullable=True)
     analysis_result = Column(JSON, nullable=False)
     status = Column(String(50), default="completed")
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
 
     # Relationships
     user = relationship("User", back_populates="analyses")

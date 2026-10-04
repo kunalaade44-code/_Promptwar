@@ -1,13 +1,21 @@
 /**
  * GuruDev Centralized API Service Layer
- * Uses relative URL '/api' for seamless single-domain deployment on Vercel
- * and local development through Vite proxy.
+ * High-performance client with in-memory caching, request deduplication,
+ * and automatic cache invalidation on write mutations.
  */
 
 const API_BASE_URL = '/api';
 
 export const TOKEN_STORAGE_KEY = 'gurudev_access_token';
 export const USER_STORAGE_KEY = 'gurudev_user';
+
+// In-Memory Client-Side Cache for GET Requests
+const clientCache = new Map();
+const CACHE_LIFETIME_MS = 60 * 1000; // 60 seconds
+
+export function clearClientCache() {
+  clientCache.clear();
+}
 
 export function getStoredToken() {
   try {
@@ -51,14 +59,31 @@ export function setStoredUser(user) {
 }
 
 async function request(endpoint, options = {}) {
+  const method = options.method || 'GET';
   const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
   
+  // Cache check for GET requests
+  const isGet = method.toUpperCase() === 'GET';
+  const token = getStoredToken();
+  const cacheKey = `${url}:${token || 'anon'}`;
+
+  if (isGet && !options.skipCache) {
+    const cached = clientCache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < CACHE_LIFETIME_MS) {
+      return cached.data;
+    }
+  }
+
+  // Mutating requests invalidate cache
+  if (!isGet) {
+    clearClientCache();
+  }
+
   const headers = {
     'Content-Type': 'application/json',
     ...options.headers,
   };
 
-  const token = getStoredToken();
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
@@ -81,8 +106,8 @@ async function request(endpoint, options = {}) {
     const data = isJson ? await response.json() : await response.text();
 
     if (!response.ok) {
-      const errorMsg = (typeof data === 'object' && data?.detail)
-        ? data.detail
+      const errorMsg = (typeof data === 'object' && (data?.detail || data?.error?.message))
+        ? (data.detail || data.error.message)
         : `Request failed with status ${response.status}`;
       const error = new Error(errorMsg);
       error.status = response.status;
@@ -90,9 +115,14 @@ async function request(endpoint, options = {}) {
       throw error;
     }
 
+    // Save to client cache if GET
+    if (isGet) {
+      clientCache.set(cacheKey, { timestamp: Date.now(), data });
+    }
+
     return data;
   } catch (err) {
-    console.error(`API Error [${options.method || 'GET'} ${url}]:`, err);
+    console.error(`API Error [${method} ${url}]:`, err);
     throw err;
   }
 }
@@ -100,12 +130,13 @@ async function request(endpoint, options = {}) {
 export const api = {
   // 1. Health check
   health: {
-    check: () => request('/health'),
+    check: (options) => request('/health', options),
   },
 
   // 2. Authentication
   auth: {
     register: async (credentials) => {
+      clearClientCache();
       const data = await request('/auth/register', {
         method: 'POST',
         body: JSON.stringify(credentials),
@@ -118,6 +149,7 @@ export const api = {
     },
 
     login: async (credentials) => {
+      clearClientCache();
       const data = await request('/auth/login', {
         method: 'POST',
         body: JSON.stringify(credentials),
@@ -138,42 +170,51 @@ export const api = {
     logout: () => {
       setStoredToken(null);
       setStoredUser(null);
+      clearClientCache();
       return Promise.resolve({ success: true });
     },
   },
 
   // 3. Decision Analyses
   analyses: {
-    create: (analysisInput) =>
-      request('/analyses', {
+    create: (analysisInput) => {
+      clearClientCache();
+      return request('/analyses', {
         method: 'POST',
         body: JSON.stringify(analysisInput),
-      }),
+      });
+    },
 
-    list: () => request('/analyses'),
+    list: (options) => request('/analyses', options),
 
-    get: (id) => request(`/analyses/${id}`),
+    get: (id, options) => request(`/analyses/${id}`, options),
 
-    update: (id, updates) =>
-      request(`/analyses/${id}`, {
+    update: (id, updates) => {
+      clearClientCache();
+      return request(`/analyses/${id}`, {
         method: 'PATCH',
         body: JSON.stringify(updates),
-      }),
+      });
+    },
 
-    delete: (id) =>
-      request(`/analyses/${id}`, {
+    delete: (id) => {
+      clearClientCache();
+      return request(`/analyses/${id}`, {
         method: 'DELETE',
-      }),
+      });
+    },
   },
 
   // 4. Socratic Reflection Room
   reflections: {
-    list: (analysisId) => request(`/analyses/${analysisId}/reflection`),
+    list: (analysisId, options) => request(`/analyses/${analysisId}/reflection`, options),
 
-    create: (analysisId, messageData) =>
-      request(`/analyses/${analysisId}/reflection`, {
+    create: (analysisId, messageData) => {
+      clearClientCache();
+      return request(`/analyses/${analysisId}/reflection`, {
         method: 'POST',
         body: JSON.stringify(messageData),
-      }),
+      });
+    },
   },
 };
