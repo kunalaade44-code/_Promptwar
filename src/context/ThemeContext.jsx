@@ -30,8 +30,10 @@ export function ThemeProvider({ children }) {
   );
 }
 
+// oxlint-disable-next-line react/only-export-components
 export function useTheme() {
   const context = useContext(ThemeContext);
+
   if (!context) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }

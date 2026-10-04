@@ -19,7 +19,7 @@ def health_check(db: Session = Depends(get_db)):
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
         "database": db_status,
-        "database_type": "postgresql" if "postgresql" in settings.DATABASE_URL else "sqlite",
+        "database_type": "postgresql" if "postgresql" in settings.get_normalized_database_url() else "sqlite",
         "gemini_configured": bool(settings.GEMINI_API_KEY),
         "version": settings.VERSION,
         "project": settings.PROJECT_NAME

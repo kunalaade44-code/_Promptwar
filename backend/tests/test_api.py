@@ -7,7 +7,9 @@ client = TestClient(app)
 def test_health_check():
     response = client.get("/api/health")
     assert response.status_code == 200
-    assert response.json() == {"status": "ok"}
+    assert "status" in response.json()
+    assert response.json()["status"] == "healthy"
+    assert "database" in response.json()
 
 def test_root_route():
     response = client.get("/")
