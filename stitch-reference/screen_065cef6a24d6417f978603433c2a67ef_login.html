@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>The Blind Spot</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"error":"#ba1a1a","surface-container-high":"#e6e8ea","surface-container":"#eceef0","on-primary-container":"#838cae","surface-variant":"#e0e3e5","tint-lavender":"#EEF2FF","on-background":"#191c1e","on-tertiary-container":"#817dff","on-primary-fixed-variant":"#3d4664","on-surface-variant":"#45464d","surface-container-lowest":"#ffffff","accent-electric":"#6366F1","primary-fixed":"#dbe1ff","border-subtle":"#E2E8F0","primary-fixed-dim":"#bdc5e9","surface-container-low":"#f2f4f6","secondary-fixed-dim":"#b4c5ff","on-secondary-container":"#fefcff","tertiary-fixed-dim":"#c3c0ff","on-error":"#ffffff","outline":"#76767e","surface-bright":"#f7f9fb","accent-cyan":"#38BDF8","on-secondary":"#ffffff","surface-tint":"#545d7c","surface-deep":"#0B132B","secondary-fixed":"#dbe1ff","background":"#f7f9fb","on-error-container":"#93000a","primary-container":"#1c2541","on-surface":"#191c1e","tertiary-container":"#160088","surface":"#f7f9fb","inverse-surface":"#2d3133","surface-dim":"#d8dadc","surface-container-highest":"#e0e3e5","on-secondary-fixed":"#00174b","secondary-container":"#316bf3","tertiary-fixed":"#e2dfff","outline-variant":"#c6c6ce","secondary":"#0051d5","on-tertiary-fixed":"#0f0069","on-tertiary-fixed-variant":"#3323cc","inverse-on-surface":"#eff1f3","on-secondary-fixed-variant":"#003ea8","inverse-primary":"#bdc5e9","tertiary":"#08004c","surface-subtle":"#F1F5F9","error-container":"#ffdad6","primary":"#06102b","on-tertiary":"#ffffff","on-primary-fixed":"#111a36","on-primary":"#ffffff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter-mobile":"1rem","margin-mobile":"1.25rem","space-lg":"1.5rem","space-xs":"0.25rem","space-sm":"0.5rem","margin":"3rem","gutter":"1.5rem","space-md":"1rem","space-xl":"2.5rem"},fontFamily:{"headline-md":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"headline-xl-mobile":["Plus Jakarta Sans"],"label-caps":["JetBrains Mono"],"body-sm":["Inter"],"body-md":["Inter"],"code-inline":["JetBrains Mono"],"body-lg":["Inter"]},fontSize:{"headline-md":["22px",{lineHeight:"30px",letterSpacing:"-0.015em",fontWeight:"600"}],"headline-xl":["40px",{lineHeight:"48px",letterSpacing:"-0.025em",fontWeight:"700"}],"title-md":["18px",{lineHeight:"26px",letterSpacing:"-0.01em",fontWeight:"600"}],"display-lg-mobile":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"800"}],"headline-lg":["30px",{lineHeight:"38px",letterSpacing:"-0.02em",fontWeight:"600"}],"display-lg":["56px",{lineHeight:"64px",letterSpacing:"-0.03em",fontWeight:"800"}],"headline-xl-mobile":["28px",{lineHeight:"36px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-caps":["11px",{lineHeight:"16px",letterSpacing:"0.08em",fontWeight:"600"}],"body-sm":["12px",{lineHeight:"18px",letterSpacing:"0.01em",fontWeight:"400"}],"body-md":["14px",{lineHeight:"22px",letterSpacing:"0em",fontWeight:"400"}],"code-inline":["13px",{lineHeight:"20px",letterSpacing:"-0.01em",fontWeight:"500"}],"body-lg":["16px",{lineHeight:"26px",letterSpacing:"-0.005em",fontWeight:"400"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col justify-between"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-[1440px] mx-auto px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Minimalist modern logo for The Blind Spot: an abstract stylized human eye combined with an expanding radiant lens or neural aperture, representing insight beyond what is seen. Deep navy and electric indigo vector mark.. Brand logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XyIBtKbfin7H6H7tSjyMQ4oUMjqxgttFe7Re3B8QX79i-AGqVy-_FBhqz4eyBJvyVXDEHO6OO0jKBlxap7ZQncDio4sXRvfRNfozDU96YmHcneWkWbWw1rad4yMdC0q9HN2zuon3FPV5EhVIgWS9ULL_4KXyIGaA5rd0ZJJ0A14JLvdiTDrWhb332j8kfuSX4gdwOqvU2KdR-UoKvbKLSzlJ4JX7INLcVzGGdX5hsYC2OaD5Bq7lX6uuc"/><span class="font-title-md text-title-md tracking-tight text-on-surface">The Blind Spot</span></div><div class="flex items-center gap-space-lg"><nav class="flex items-center gap-space-md" data-active-classes="bg-primary-container text-on-primary-container font-medium rounded-lg px-3 py-1.5"><a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md" data-path="overview" href="#">Back to Overview</a><a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md" data-path="sign-up" href="#">Sign Up</a></nav><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 flex-1 flex flex-col justify-center items-center bg-surface"><div class="flex flex-col w-full">
+<div class="relative w-full flex items-center justify-center p-space-sm sm:p-space-lg lg:p-space-xl overflow-hidden">
+<!-- Atmospheric Ambient Glows -->
+<div class="absolute -top-32 -left-32 w-96 h-96 bg-secondary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-32 -right-32 w-96 h-96 bg-accent-electric/10 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Main Authentication Shell Container -->
+<div class="w-full max-w-[1240px] bg-surface-container-lowest rounded-2xl shadow-xl flex flex-col lg:flex-row overflow-hidden">
+<!-- ================= LEFT COLUMN: BRAND & COGNITIVE GATEWAY ================= -->
+<div class="lg:w-[48%] bg-gradient-to-br from-primary via-primary-container to-surface-deep p-space-lg sm:p-space-xl flex flex-col justify-between relative text-surface-container-lowest">
+<!-- Background Refractive Pattern -->
+<div class="absolute inset-0 bg-radial-gradient from-accent-electric/15 to-transparent pointer-events-none"></div>
+<div class="absolute top-0 right-0 w-64 h-64 bg-accent-cyan/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-space-lg">
+<!-- Top Status Pill -->
+<div class="flex items-center justify-between flex-wrap gap-space-xs">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-lowest/10 backdrop-blur-md text-tint-lavender font-label-caps text-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-accent-cyan animate-pulse"></span>
+              CRITICAL THINKING COMPANION
+            </span>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-surface-container-lowest/5 text-on-primary-container font-label-caps text-label-caps">
+              SESSION GATEWAY • V4.2
+            </span>
+</div>
+<!-- Brand Entity -->
+<div class="flex items-center gap-space-sm">
+<img alt="The Blind Spot logo aperture" class="w-10 h-10 object-contain rounded-xl p-1 bg-surface-container-lowest/10 backdrop-blur-md shadow-sm" src="https://lh3.googleusercontent.com/aida/AEtjO1XyIBtKbfin7H6H7tSjyMQ4oUMjqxgttFe7Re3B8QX79i-AGqVy-_FBhqz4eyBJvyVXDEHO6OO0jKBlxap7ZQncDio4sXRvfRNfozDU96YmHcneWkWbWw1rad4yMdC0q9HN2zuon3FPV5EhVIgWS9ULL_4KXyIGaA5rd0ZJJ0A14JLvdiTDrWhb332j8kfuSX4gdwOqvU2KdR-UoKvbKLSzlJ4JX7INLcVzGGdX5hsYC2OaD5Bq7lX6uuc"/>
+<div>
+<h2 class="font-headline-md text-headline-md tracking-tight text-surface-container-lowest leading-none">The Blind Spot</h2>
+<p class="font-body-sm text-body-sm text-primary-fixed-dim mt-0.5">Cognitive Bias &amp; Assumption Illumination</p>
+</div>
+</div>
+<!-- Main Narrative Heading -->
+<div class="space-y-space-xs">
+<h1 class="font-headline-xl text-headline-xl tracking-tight text-surface-container-lowest leading-tight">
+              Welcome Back to a <span class="bg-gradient-to-r from-surface-container-lowest via-primary-fixed to-accent-cyan bg-clip-text text-transparent">Clearer Perspective.</span>
+</h1>
+<p class="font-body-md text-body-md text-primary-fixed-dim leading-relaxed">
+              Continue exploring your high-stakes decisions, systematically challenging implicit premises, and unearthing what intuition quietly conceals.
+            </p>
+</div>
+<!-- Embedded Conceptual Visual Card -->
+<div class="relative rounded-xl overflow-hidden bg-surface-container-lowest/5 backdrop-blur-xl shadow-lg p-space-md">
+<div class="relative w-full h-44 rounded-lg overflow-hidden bg-surface-deep/60">
+<img class="w-full h-full object-cover opacity-90 transition-transform duration-700 hover:scale-105" data-alt="Abstract illuminated glowing crystalline prism resting atop a translucent neural human bust with holographic synaptic pathways and laser refractions in deep navy, royal blue, and electric indigo lighting, representing lucid critical cognition and deep strategic insight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBXfQBwOCyBBzG84Yq6eNpwrs8-gRPWFVtedqXPNv3uKlMbV7qJ3Zah7CaeP7cBV5pH4r2Q3waJ9i1HFwGlJZKVLi991lCFD7mB9HfAXFLqnGhJFX83tIoOfzPHuyk20rV8o8E0LHqjnpgwLjqDfc9dBFwJ8H9aq1twrpsTQzzlymyDHNZqS7nD6xbVCIaEye-6RLqMQlavZrTZ6zJbSjTPMvfL0CbK-7SxsIP8t1Uyzw95LcJ5iWf"/>
+<!-- Subtle Image Scrim & Tag -->
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent flex flex-col justify-between p-3">
+<span class="self-start px-2 py-0.5 rounded bg-surface-deep/80 backdrop-blur-md text-accent-cyan font-label-caps text-label-caps">
+                  PERCEPTION FILTER: ACTIVE
+                </span>
+<span class="text-tint-lavender font-code-inline text-code-inline">
+                  “Think beyond the obvious.” — Socratic dialectic engine ready.
+                </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Security & Reassurance Metrics Bar -->
+<div class="relative z-10 pt-space-lg mt-space-md">
+<div class="grid grid-cols-3 gap-space-xs py-space-sm bg-surface-container-lowest/5 rounded-xl px-space-sm backdrop-blur-md text-center">
+<div>
+<div class="font-headline-md text-headline-md text-accent-cyan leading-none font-bold">48+</div>
+<div class="font-label-caps text-label-caps text-primary-fixed-dim mt-1">Biases Mapped</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-tint-lavender leading-none font-bold">100%</div>
+<div class="font-label-caps text-label-caps text-primary-fixed-dim mt-1">Logic Traced</div>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-surface-container-lowest leading-none font-bold">0-Logs</div>
+<div class="font-label-caps text-label-caps text-primary-fixed-dim mt-1">Encrypted Core</div>
+</div>
+</div>
+<div class="flex items-center justify-between text-primary-fixed-dim font-label-caps text-label-caps mt-space-sm px-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-accent-cyan">verified_user</span>
+              SOC 2 Type II
+            </span>
+<span class="w-1 h-1 rounded-full bg-primary-fixed-variant"></span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-accent-cyan">lock_reset</span>
+              Zero-Retention Mode
+            </span>
+<span class="w-1 h-1 rounded-full bg-primary-fixed-variant"></span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-accent-cyan">psychology</span>
+              Human Autonomy
+            </span>
+</div>
+</div>
+</div>
+<!-- ================= RIGHT COLUMN: INTERACTIVE AUTHENTICATION ================= -->
+<div class="lg:w-[52%] bg-surface-container-lowest p-space-lg sm:p-space-xl flex flex-col justify-between">
+<div class="w-full max-w-md mx-auto">
+<!-- Category Header -->
+<div class="flex items-center justify-between mb-space-sm">
+<span class="px-2.5 py-1 rounded bg-tint-lavender text-accent-electric font-label-caps text-label-caps tracking-wider uppercase">
+              AUTHENTICATION PORTAL
+            </span>
+<span class="text-on-surface-variant font-label-caps text-label-caps flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Node Gateway 01
+            </span>
+</div>
+<!-- Titles -->
+<div class="mb-space-lg">
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Welcome Back</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              Log in to continue your thinking journey.
+            </p>
+</div>
+<!-- Dynamic Error Alert Box (Toggleable via Inspector) -->
+<div class="hidden mb-space-md p-space-sm rounded-xl bg-error-container text-on-error-container items-start gap-space-xs transition-all" id="authAlert">
+<span class="material-symbols-outlined text-[20px] text-error flex-shrink-0 mt-0.5">error</span>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm font-semibold text-error">Authentication Failed</p>
+<p class="font-body-sm text-body-sm text-error/90" id="authAlertMessage">Invalid organizational credentials or unrecognized security key.</p>
+</div>
+<button class="text-error hover:opacity-75" onclick="dismissAlert()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- SSO: Google Single Sign-On -->
+<button class="w-full flex items-center justify-center gap-space-sm py-2.5 px-space-md rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md text-body-md transition-all duration-200 shadow-sm active:scale-[0.99] group" type="button">
+<svg class="w-5 h-5 flex-shrink-0" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"></path>
+</svg>
+<span class="font-medium group-hover:text-primary">Continue with Google</span>
+</button>
+<!-- Divider -->
+<div class="relative my-space-md flex items-center justify-center">
+<div class="w-full h-px bg-surface-container-high"></div>
+<span class="absolute px-3 bg-surface-container-lowest text-on-surface-variant font-label-caps text-label-caps">
+              OR CONTINUE WITH EMAIL
+            </span>
+</div>
+<!-- Credentials Form -->
+<form class="space-y-space-md" id="loginForm" onsubmit="handleFormSubmit(event)">
+<!-- Email Field -->
+<div class="space-y-1">
+<label class="block font-body-sm text-body-sm font-medium text-primary" for="loginEmail">
+                Email Address
+              </label>
+<div class="relative rounded-lg bg-surface-container-low transition-all" id="emailWrapper">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant">mail</span>
+<input class="w-full bg-transparent pl-10 pr-4 py-2.5 rounded-lg text-primary font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary/20 transition-all placeholder:text-outline" id="loginEmail" name="email" placeholder="analyst@org.com" required="" type="email" value="julian@institution.org"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-1">
+<div class="flex items-center justify-between">
+<label class="block font-body-sm text-body-sm font-medium text-primary" for="loginPassword">
+                  Password
+                </label>
+<button class="font-body-sm text-body-sm text-secondary hover:text-secondary-container transition-colors" onclick="triggerForgotPassword()" type="button">
+                  Forgot Password?
+                </button>
+</div>
+<div class="relative rounded-lg bg-surface-container-low transition-all" id="passwordWrapper">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant">lock</span>
+<input class="w-full bg-transparent pl-10 pr-10 py-2.5 rounded-lg text-primary font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary/20 transition-all placeholder:text-outline" id="loginPassword" name="password" placeholder="••••••••••••••••" required="" type="password" value="CognitiveClarity2026!"/>
+<button aria-label="Toggle password visibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors p-1" id="togglePasswordBtn" onclick="togglePasswordVisibility()" type="button">
+<span class="material-symbols-outlined text-[18px]" id="passwordEyeIcon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me & Security Meta -->
+<div class="flex items-center justify-between pt-1">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-low text-primary accent-primary focus:ring-0 focus:outline-none cursor-pointer" id="rememberMe" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Remember Me</span>
+</label>
+<span class="font-label-caps text-label-caps text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">encrypted</span>
+                TLS 1.3 Active
+              </span>
+</div>
+<!-- Primary Submit Button -->
+<button class="w-full relative overflow-hidden py-3 px-space-md rounded-xl bg-primary hover:bg-surface-deep text-on-primary font-title-md text-title-md font-semibold tracking-tight shadow-md hover:shadow-xl transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2 group cursor-pointer" id="submitBtn" type="submit">
+<span class="flex items-center gap-2" id="btnText">
+                Log In
+                <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</span>
+<span class="hidden items-center gap-2" id="btnSpinner">
+<svg class="animate-spin h-5 w-5 text-on-primary" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+<span>Authenticating Neural Core...</span>
+</span>
+</button>
+</form>
+<!-- Secondary Switcher to Sign Up -->
+<div class="mt-space-md py-space-sm px-space-md rounded-xl bg-surface-container-low text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Don't have an account? 
+              <a class="font-semibold text-secondary hover:text-secondary-container transition-colors inline-flex items-center gap-0.5 ml-1" data-path="sign-up" href="#">
+                Sign Up →
+              </a>
+</p>
+</div>
+<!-- Channel Latency Telemetry -->
+<div class="mt-space-sm flex items-center justify-between text-outline font-label-caps text-label-caps">
+<span class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-accent-electric"></span>
+              SSL 256-Bit Channel
+            </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">speed</span>
+              Latency 12ms
+            </span>
+</div>
+</div>
+<!-- ================= INTERACTIVE STATES SHOWCASE TRAY ================= -->
+<div class="w-full max-w-md mx-auto mt-space-lg pt-space-md">
+<div class="bg-surface-subtle p-space-sm rounded-xl">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant font-semibold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-accent-electric">tune</span>
+                UI State Inspector
+              </span>
+<span class="font-label-caps text-label-caps text-outline">Interactive Prototype</span>
+</div>
+<div class="flex flex-wrap gap-1.5">
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-primary font-label-caps text-label-caps shadow-sm font-semibold transition-all hover:bg-surface-bright" id="state-normal" onclick="applyUiState('normal')" type="button">
+                Normal
+              </button>
+<button class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-caps text-label-caps transition-all hover:bg-surface-container-high" id="state-focus" onclick="applyUiState('focus')" type="button">
+                Active Focus
+              </button>
+<button class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-caps text-label-caps transition-all hover:bg-surface-container-high" id="state-reveal" onclick="applyUiState('reveal')" type="button">
+                Show Password
+              </button>
+<button class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-caps text-label-caps transition-all hover:bg-surface-container-high" id="state-error" onclick="applyUiState('error')" type="button">
+                Error Alert
+              </button>
+<button class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-caps text-label-caps transition-all hover:bg-surface-container-high" id="state-loading" onclick="applyUiState('loading')" type="button">
+                Loading State
+              </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal: Password Recovery Prototype Flow -->
+<div class="fixed inset-0 z-50 bg-primary/40 backdrop-blur-sm hidden items-center justify-center p-4" id="forgotPasswordModal">
+<div class="bg-surface-container-lowest w-full max-w-md rounded-2xl shadow-2xl p-space-lg relative animate-fade-in">
+<div class="w-10 h-10 rounded-xl bg-tint-lavender text-secondary flex items-center justify-center mb-space-sm">
+<span class="material-symbols-outlined text-[24px]">key</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary tracking-tight">Restore Cognition Key</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-relaxed">
+        Input your verified organizational email. We will transmit an encrypted single-use authentication token directly to your secure inbox.
+      </p>
+<div class="mt-space-md space-y-space-sm">
+<div>
+<label class="block font-body-sm text-body-sm font-medium text-primary mb-1">Registered Address</label>
+<input class="w-full bg-surface-container-low px-3.5 py-2.5 rounded-lg text-primary font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-secondary/20" id="recoveryEmail" type="email" value="julian@institution.org"/>
+</div>
+<div class="hidden p-space-sm rounded-lg bg-emerald-50 text-emerald-800 text-body-sm font-body-sm flex items-center gap-2" id="recoveryConfirmation">
+<span class="material-symbols-outlined text-[18px] text-emerald-600">check_circle</span>
+<span>Token dispatched! Please check your encrypted email client.</span>
+</div>
+</div>
+<div class="mt-space-lg flex items-center justify-end gap-space-xs">
+<button class="px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm transition-colors" onclick="closeForgotPassword()" type="button">
+          Cancel
+        </button>
+<button class="px-4 py-2 rounded-lg bg-primary hover:bg-surface-deep text-on-primary font-body-sm text-body-sm font-semibold transition-colors" onclick="sendRecoveryToken()" type="button">
+          Send Token →
+        </button>
+</div>
+</div>
+</div>
+<script>
+    function togglePasswordVisibility() {
+      const pwd = document.getElementById('loginPassword');
+      const icon = document.getElementById('passwordEyeIcon');
+      if (pwd.type === 'password') {
+        pwd.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        pwd.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+
+    function dismissAlert() {
+      const alertBox = document.getElementById('authAlert');
+      alertBox.classList.add('hidden');
+      alertBox.classList.remove('flex');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        const email = document.getElementById('loginEmail').value;
+        if (!email.includes('@')) {
+          showAuthError('Please enter a valid academic or enterprise email domain.');
+        } else {
+          showAuthError('Demo session verified. Directing to cognitive dashboard...');
+          const box = document.getElementById('authAlert');
+          box.classList.remove('bg-error-container', 'text-on-error-container');
+          box.classList.add('bg-tint-lavender', 'text-primary');
+          document.getElementById('authAlertMessage').textContent = 'Dialectic model initialized. Redirecting...';
+        }
+      }, 1200);
+    }
+
+    function setLoading(isLoading) {
+      const btn = document.getElementById('submitBtn');
+      const txt = document.getElementById('btnText');
+      const spnr = document.getElementById('btnSpinner');
+      if (isLoading) {
+        btn.disabled = true;
+        txt.classList.add('hidden');
+        spnr.classList.remove('hidden');
+        spnr.classList.add('flex');
+      } else {
+        btn.disabled = false;
+        txt.classList.remove('hidden');
+        spnr.classList.add('hidden');
+        spnr.classList.remove('flex');
+      }
+    }
+
+    function showAuthError(msg) {
+      const alertBox = document.getElementById('authAlert');
+      const alertMsg = document.getElementById('authAlertMessage');
+      alertMsg.textContent = msg || 'Invalid organizational credentials or unrecognized security key.';
+      alertBox.classList.remove('hidden');
+      alertBox.classList.add('flex');
+    }
+
+    function triggerForgotPassword() {
+      const modal = document.getElementById('forgotPasswordModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeForgotPassword() {
+      const modal = document.getElementById('forgotPasswordModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.getElementById('recoveryConfirmation').classList.add('hidden');
+    }
+
+    function sendRecoveryToken() {
+      const conf = document.getElementById('recoveryConfirmation');
+      conf.classList.remove('hidden');
+      setTimeout(() => {
+        closeForgotPassword();
+      }, 1500);
+    }
+
+    function applyUiState(state) {
+      // Reset active pill button styles
+      ['normal', 'focus', 'reveal', 'error', 'loading'].forEach(id => {
+        const btn = document.getElementById('state-' + id);
+        if (btn) {
+          btn.className = 'px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-caps text-label-caps transition-all hover:bg-surface-container-high';
+        }
+      });
+      const activeBtn = document.getElementById('state-' + state);
+      if (activeBtn) {
+        activeBtn.className = 'px-2.5 py-1 rounded bg-surface-container-lowest text-primary font-label-caps text-label-caps shadow-sm font-semibold transition-all hover:bg-surface-bright';
+      }
+
+      const pwd = document.getElementById('loginPassword');
+      const eye = document.getElementById('passwordEyeIcon');
+      const emailWrap = document.getElementById('emailWrapper');
+      const emailInput = document.getElementById('loginEmail');
+
+      if (state === 'normal') {
+        dismissAlert();
+        setLoading(false);
+        pwd.type = 'password';
+        eye.textContent = 'visibility';
+        emailInput.blur();
+      } else if (state === 'focus') {
+        dismissAlert();
+        setLoading(false);
+        pwd.type = 'password';
+        eye.textContent = 'visibility';
+        emailInput.focus();
+      } else if (state === 'reveal') {
+        dismissAlert();
+        setLoading(false);
+        pwd.type = 'text';
+        eye.textContent = 'visibility_off';
+      } else if (state === 'error') {
+        setLoading(false);
+        showAuthError('Invalid credentials or unrecognized security key.');
+      } else if (state === 'loading') {
+        dismissAlert();
+        setLoading(true);
+      }
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-low py-space-lg shadow-[0_-1px_8px_rgba(0,0,0,0.02)]"><div class="max-w-[1440px] mx-auto px-gutter flex flex-col sm:flex-row items-center justify-between gap-space-sm"><p class="text-on-surface-variant font-body-sm text-body-sm">© 2026 The Blind Spot. Rigorous cognitive illumination.</p><div class="flex items-center gap-space-lg"><a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="privacy-policy" href="#">Privacy Policy</a><a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="terms-of-service" href="#">Terms of Service</a></div></div></footer></body></html>
